@@ -44,6 +44,13 @@ function App() {
       tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f'
     }
   })
+  // We use the Logical AND operator to render something or nothing
+    // The constant is defined by data returned by the API queries
+    // Evaluating from L to R, we'll either receive the value of the first falsy encountered OR if all values are truthy we will receive the last of the last operand
+      // ie daiPriceInEth = IF daiData is truthy AND daiData.tokens[0] is truthy, return the value of daiData.tokens[0]
+  const daiPriceInEth = daiData && daiData.tokens[0].derivedETH
+  const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity
+  const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
 
   return (
     <div>
