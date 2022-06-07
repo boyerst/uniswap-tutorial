@@ -36,6 +36,14 @@ const ETH_PRICE_QUERY = gql`
 `
 
 function App() {
+  // Define vars using useQuery so we can make Apollo queries with React using React hooks
+  const { loading: ethLoading, data: ethPriceData } = useQuery(ETH_PRICE_QUERY)
+  const { loading: daiLoading, data: daiData } = useQuery(DAI_QUERY, {
+    // Pass in the vars that our query requires - in this case the DAI mainnet contract address
+    variables: {
+      tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f'
+    }
+  })
 
   return (
     <div>
