@@ -27,6 +27,14 @@ const DAI_QUERY = gql`
   }
 `
 
+const ETH_PRICE_QUERY = gql`
+  query bundles {
+    bundles(where: { id: "1" }) {
+      ethPrice
+    }
+  }
+`
+
 function App() {
 
   return (
