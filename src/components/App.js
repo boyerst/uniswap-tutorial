@@ -97,7 +97,14 @@ function App() {
                   {daiLoading
                     ? 'Loading token data...'
                     : // display the total amount of DAI spread across all pools
-                      parseFloat(daiTotalLiquidity).toFixed(0)}
+                      parseFloat(daiTotalLiquidity).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                </h2>
+                <h2>
+                  ETH Price:{' '}
+                  {daiLoading
+                    ? 'Loading token data...'
+                    : '$' + // display the total amount of DAI spread across all pools
+                      parseFloat(ethPriceInUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                 </h2>
 
               </div>
