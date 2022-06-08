@@ -40,7 +40,7 @@ const ETH_PRICE_QUERY = gql`
 
 function App() {
 
-  // MAKE THE QUERIES
+  // EXECUTE THE QUERIES
   // Define vars using useQuery so we can make Apollo queries with React using React hooks
   // Whenever the App component renders, the useQuery hook automatically executes our query and returns a destructured object containing loading, error, and data properties
     // We unpack these properties from the object and assign them to new variable names
@@ -54,7 +54,7 @@ function App() {
     }
   })
 
-  // We format the data we get back from the queries
+  // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
     // The constant is defined by data returned by the API queries
     // Evaluating from L to R, we'll either receive the value of the first falsy encountered OR if all values are truthy we will receive the last of the last operand
@@ -65,7 +65,17 @@ function App() {
 
   return (
     <div>
-
+      <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <a
+          className="navbar-brand col-sm-3 col-md-2 mr-0"
+          href=""
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={uniswapLogo} width="30" height="30" className="d-inline-block align-top" alt="" />
+          &nbsp; Uniswap Explorer
+        </a>
+      </nav>
     </div>
   );
 }
