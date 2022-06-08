@@ -80,7 +80,21 @@ function App() {
         <div className="row">
           <main role="main" className="col-lg-12 d-flex text-center">
             <div className="content mr-auto ml-auto">
-              
+              <div>
+                <img src={daiLogo} width="150" height="150" className="mb-4" alt="" />
+                <h2>
+                  {/*We render based on the conditions of the query*/}
+                  Dai price:{' '}
+                  {ethLoading || daiLoading
+                    ? 'Loading token data...'
+                    : '$' +
+                      // parse responses as floats and fix to 2 decimals
+                      // parseFloat excepts a string and parses it to a floating point number
+                      (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
+
+                </h2>
+
+              </div>
             </div>
           </main>
         </div>
