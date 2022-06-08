@@ -84,14 +84,20 @@ function App() {
                 <img src={daiLogo} width="150" height="150" className="mb-4" alt="" />
                 <h2>
                   {/*We render based on the conditions of the query*/}
-                  Dai price:{' '}
+                  DAI price:{' '}
                   {ethLoading || daiLoading
                     ? 'Loading token data...'
                     : '$' +
                       // parse responses as floats and fix to 2 decimals
                       // parseFloat excepts a string and parses it to a floating point number
                       (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
-
+                </h2>
+                <h2>
+                  DAI Total Liquidity:{' '}
+                  {daiLoading
+                    ? 'Loading token data...'
+                    : // display the total amount of DAI spread across all pools
+                      parseFloat(daiTotalLiquidity).toFixed(0)}
                 </h2>
 
               </div>
