@@ -21,6 +21,10 @@ export const client = new ApolloClient({
 })
 
 // DEFINE THE QUERIES
+  // 'query' = operation type?
+  // 'tokens' = operation name?
+  // We pass a variable into this particular query...
+    // $tokenAddress: Bytes!
 const DAI_QUERY = gql`
   query tokens($tokenAddress: Bytes!) {
     tokens(where: { id: $tokenAddress }) {
@@ -32,9 +36,11 @@ const DAI_QUERY = gql`
 // data: for DAI_QUERY (variable renamed from data to daiData)
   // This is the object returned from DAI_QUERY:
 
-//        tokens: [{ derivedETH: "0.000556614316469043115451462643202194"
-//        totalLiquidity: "82268746.914670795110320116"
-//        __typename: "Token" }]
+//        tokens: [{ 
+//                  derivedETH: "0.000556614316469043115451462643202194"
+//                  totalLiquidity: "82268746.914670795110320116"
+//                  __typename: "Token" 
+//                 }]
 
 
 const ETH_PRICE_QUERY = gql`
@@ -47,8 +53,10 @@ const ETH_PRICE_QUERY = gql`
 // data: for ETH_PRICE_QUERY (variable renamed from data to ethPriceData)
   // This is the object returned from ETH_PRICE_QUERY:
 
-//          bundles: [{ ethPrice: "1800.115767561320051659391505499823"
-//          __typename: "Bundle" }]
+//          bundles: [{ 
+//                      ethPrice: "1800.115767561320051659391505499823"
+//                      __typename: "Bundle" 
+//                   }]
 
 
 
