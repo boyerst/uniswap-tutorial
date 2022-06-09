@@ -21,10 +21,21 @@ export const client = new ApolloClient({
 })
 
 // DEFINE THE QUERIES
-  // 'query' = operation type?
-  // 'tokens' = operation name?
-  // We pass a variable into this particular query...
+  // OPERATION TYPE AND NAME
+    // 'query' = operation type?
+    // 'tokens' = operation name?
+  // VARIABLES & VARIABLE DEFINITION
+    // We pass a variable into this particular query...
     // $tokenAddress: Bytes!
+    // ↑ Where $tokenAddress = the variable + Bytes! = variable type
+    // The !exclamation denotes that the variable type is required (the field requires a non-null argument)
+  // PARAMETERS
+    // We use the 'where' parameter to filter for properties
+      // Here we are querying for "tokens where they have an id of this address"
+  // FIELDS
+    // tokens
+    // derviedETH
+    // totalLiquidity
 const DAI_QUERY = gql`
   query tokens($tokenAddress: Bytes!) {
     tokens(where: { id: $tokenAddress }) {
@@ -43,6 +54,23 @@ const DAI_QUERY = gql`
 //                 }]
 
 
+
+
+
+
+
+
+
+
+
+
+
+// OPERATION TYPE AND NAME
+  // 'query' = type
+  // 'bundles' = name
+    // ↑ We find these names in the subgraph of Uniswap
+    // Although it is listed as 'bundle' in Uniswap subgraph, we pluralize it because of the pagination model?
+      // From the docs "The simplest way to expose a connection between objects is with a field that returns a plural type" ❓❓❓❓
 const ETH_PRICE_QUERY = gql`
   query bundles {
     bundles(where: { id: "1" }) {
@@ -57,6 +85,8 @@ const ETH_PRICE_QUERY = gql`
 //                      ethPrice: "1800.115767561320051659391505499823"
 //                      __typename: "Bundle" 
 //                   }]
+
+
 
 
 
