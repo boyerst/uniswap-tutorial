@@ -64,7 +64,6 @@ const DAI_QUERY = gql`
 
 
 
-
 // OPERATION TYPE AND NAME
   // 'query' = type
   // 'bundles' = name
@@ -90,6 +89,30 @@ const ETH_PRICE_QUERY = gql`
 
 
 
+const ALL_TOKENS_QUERY = gql`
+  query tokens {
+    tokens {
+      id
+      symbol
+      name
+    }
+  }
+`
+
+
+// const ALL_TOKENS_QUERY = gql`
+//   query($first: Int, $orderBy: BigInt, $orderDirection: String) {
+//     tokens(
+//       first: $first, orderBy: $orderBy, orderDirection: $orderDirection
+//     ) {
+//       id
+//       tokenID
+//       contentURI
+//       metadataURI
+//     }
+//   }
+// `
+
 
 
 
@@ -109,6 +132,7 @@ function App() {
       tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f'
     }
   })
+   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -119,8 +143,13 @@ function App() {
   const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity
   const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
 
+
   console.log(ethPriceData)
   console.log(daiData)
+  console.log(allTokensError)
+  console.log(allTokensData)
+
+
 
   return (
     <div>
