@@ -90,7 +90,7 @@ const ETH_PRICE_QUERY = gql`
 
 const ALL_TOKENS_QUERY = gql`
   query tokens {
-    tokens (first: 50, orderBy: symbol, orderDirection: desc) {
+    tokens (first: 50, skip: 3000, orderBy: symbol, orderDirection: asc) {
       id
       symbol
       name
