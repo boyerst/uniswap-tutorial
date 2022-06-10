@@ -146,7 +146,17 @@ const USDT_QUERY = gql`
     }
   }
 `
-
+const USDC_QUERY = gql`
+  query tokens {
+    tokens (where: {symbol: "USDC"}, first: 1) {
+      symbol, 
+      name, 
+      totalSupply, 
+      tradeVolume, 
+      txCount
+    }
+  }
+`
 
 
 
@@ -171,7 +181,7 @@ function App() {
   const { loading: btcLoading, error: btcError, data: btcData } = useQuery(BTC_QUERY)
   const { loading: wbtcLoading, error: wbtcError, data: wbtcData } = useQuery(WBTC_QUERY)
   const { loading: usdtLoading, error: usdtError, data: usdtData } = useQuery(USDT_QUERY)
-
+  const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
     // The constant is defined by data returned by the API queries
@@ -188,7 +198,7 @@ function App() {
   console.log(btcData)
   console.log(wbtcData)
   console.log(usdtData)
-
+  console.log(usdcData)
 
   return (
     <div>
