@@ -88,7 +88,6 @@ const ETH_PRICE_QUERY = gql`
 
 
 
-
 const ALL_TOKENS_QUERY = gql`
   query tokens {
     tokens {
@@ -98,20 +97,35 @@ const ALL_TOKENS_QUERY = gql`
     }
   }
 `
-
-
 // const ALL_TOKENS_QUERY = gql`
 //   query($first: Int, $orderBy: BigInt, $orderDirection: String) {
 //     tokens(
 //       first: $first, orderBy: $orderBy, orderDirection: $orderDirection
 //     ) {
 //       id
-//       tokenID
-//       contentURI
-//       metadataURI
+//       symbol
+//       name
+      
 //     }
 //   }
 // `
+
+
+const BTC_QUERY = gql`
+  query tokens {
+    tokens (where: {name: "Bitcoin"}, first: 1) {
+      symbol, 
+      name, 
+      totalSupply, 
+      tradeVolume, 
+      txCount
+    }
+  }
+`
+
+
+
+
 
 
 
@@ -132,7 +146,8 @@ function App() {
       tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f'
     }
   })
-   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
+  const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
+  const { loading: btcLoading, error: btcError, data: btcData } = useQuery(BTC_QUERY)
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -148,6 +163,7 @@ function App() {
   console.log(daiData)
   console.log(allTokensError)
   console.log(allTokensData)
+  console.log(btcData)
 
 
 
