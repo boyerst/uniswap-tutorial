@@ -123,7 +123,17 @@ const BTC_QUERY = gql`
   }
 `
 
-
+const WBTC_QUERY = gql`
+  query tokens {
+    tokens (where: {name: "Wrapped Bitcoin"}, first: 1) {
+      symbol, 
+      name, 
+      totalSupply, 
+      tradeVolume, 
+      txCount
+    }
+  }
+`
 
 
 
@@ -148,6 +158,7 @@ function App() {
   })
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
   const { loading: btcLoading, error: btcError, data: btcData } = useQuery(BTC_QUERY)
+  const { loading: wbtcLoading, error: wbtcError, data: wbtcData } = useQuery(WBTC_QUERY)
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -164,6 +175,7 @@ function App() {
   console.log(allTokensError)
   console.log(allTokensData)
   console.log(btcData)
+  console.log(wbtcData)
 
 
 
