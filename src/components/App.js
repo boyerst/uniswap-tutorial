@@ -114,12 +114,12 @@ const ALL_TOKENS_QUERY = gql`
 const BTC_QUERY = gql`
   query tokens {
     tokens (where: {name: "Bitcoin"}, first: 1) {
-      symbol, 
-      name, 
-      totalSupply, 
-      tradeVolume,
-      tradeVolumeUSD,
-      totalLiquidity, 
+      symbol
+      name
+      totalSupply
+      tradeVolume
+      tradeVolumeUSD
+      totalLiquidity
       txCount
     }
   }
@@ -128,10 +128,10 @@ const BTC_QUERY = gql`
 const WBTC_QUERY = gql`
   query tokens {
     tokens (where: {name: "Wrapped Bitcoin"}, first: 1) {
-      symbol, 
-      name, 
-      totalSupply, 
-      tradeVolume, 
+      symbol
+      name
+      totalSupply
+      tradeVolume
       txCount
     }
   }
@@ -140,10 +140,10 @@ const WBTC_QUERY = gql`
 const USDT_QUERY = gql`
   query tokens {
     tokens (where: {symbol: "USDT"}, first: 1) {
-      symbol, 
-      name, 
-      totalSupply, 
-      tradeVolume, 
+      symbol
+      name
+      totalSupply
+      tradeVolume
       txCount
     }
   }
@@ -151,13 +151,13 @@ const USDT_QUERY = gql`
 const USDC_QUERY = gql`
   query tokens {
     tokens (where: {symbol: "USDC"}, first: 1) {
-      symbol, 
-      name, 
-      totalSupply, 
-      tradeVolume,
-      tradeVolumeUSD,
-      untrackedVolumeUSD,  
-      txCount,
+      symbol
+      name
+      totalSupply
+      tradeVolume
+      tradeVolumeUSD
+      untrackedVolumeUSD
+      txCount
     }
   }
 `
@@ -166,8 +166,8 @@ const USDC_QUERY = gql`
 const UNISWAP_DAY_DATA = gql`
   query uniswapDayDatas {
     uniswapDayDatas {
-      dailyVolumeUSD,
-      totalVolumeUSD,
+      dailyVolumeUSD
+      totalVolumeUSD
       totalLiquidityUSD
     }
   }
@@ -188,6 +188,8 @@ const UNISWAP_FACTORY = gql`
       pairCount
       totalVolumeUSD
       totalVolumeETH
+      totalLiquidityUSD
+      totalLiquidityETH
     }
   }
 `
