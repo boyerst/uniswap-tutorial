@@ -186,6 +186,8 @@ const UNISWAP_FACTORY = gql`
   query uniswapFactories {
     uniswapFactories {
       pairCount
+      totalVolumeUSD
+      totalVolumeETH
     }
   }
 `
