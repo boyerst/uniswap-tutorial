@@ -117,7 +117,9 @@ const BTC_QUERY = gql`
       symbol, 
       name, 
       totalSupply, 
-      tradeVolume, 
+      tradeVolume,
+      tradeVolumeUSD,
+      totalLiquidity, 
       txCount
     }
   }
@@ -152,14 +154,32 @@ const USDC_QUERY = gql`
       symbol, 
       name, 
       totalSupply, 
-      tradeVolume, 
-      txCount
+      tradeVolume,
+      tradeVolumeUSD,
+      untrackedVolumeUSD,  
+      txCount,
     }
   }
 `
 
 
+const UNISWAP_DAY_DATA = gql`
+  query uniswapDayDatas {
+    uniswapDayDatas {
+      dailyVolumeUSD,
+      totalVolumeUSD,
+      totalLiquidityUSD
+    }
+  }
+`
 
+const LIQUIDITY_POSITIONS = gql`
+  query liquidityPositions {
+    liquidityPositions (where: { id: "0x00004ee988665cdda9a1080d5792cecd16dc1220-0x2e0647b90c3823a8c881de287ae2bd400489eea0" }) {
+      liquidityTokenBalance
+    }
+  }
+`
 
 
 function App() {
@@ -182,6 +202,10 @@ function App() {
   const { loading: wbtcLoading, error: wbtcError, data: wbtcData } = useQuery(WBTC_QUERY)
   const { loading: usdtLoading, error: usdtError, data: usdtData } = useQuery(USDT_QUERY)
   const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
+  const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
+  const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
+
+
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
     // The constant is defined by data returned by the API queries
@@ -192,13 +216,17 @@ function App() {
   const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
 
 
-  console.log(ethPriceData)
-  console.log(daiData)
-  console.log(allTokensData)
-  console.log(btcData)
-  console.log(wbtcData)
-  console.log(usdtData)
-  console.log(usdcData)
+  console.log("ethPriceData: ", ethPriceData)
+  console.log("daiData: ", daiData)
+  console.log("allTokensData: ", allTokensData)
+  console.log("btcData: ", btcData)
+  console.log("wbtcData: ", wbtcData)
+  console.log("usdtData: ", usdtData)
+  console.log("usdcData: ", usdcData)
+  console.log("dayDataError: ", dayDataError)
+  console.log("dayDataData: ", dayDataData)
+  console.log("liquidityPositionsData: ", liquidityPositionsData)
+
 
   return (
     <div>
