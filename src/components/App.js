@@ -181,7 +181,6 @@ const LIQUIDITY_POSITIONS = gql`
   }
 `
 
-
 const UNISWAP_FACTORY = gql`
   query uniswapFactories {
     uniswapFactories {
@@ -190,9 +189,14 @@ const UNISWAP_FACTORY = gql`
       totalVolumeETH
       totalLiquidityUSD
       totalLiquidityETH
+      txCount
+      mostLiquidTokens {
+        token
+      }
     }
   }
 `
+
 
 
 function App() {
