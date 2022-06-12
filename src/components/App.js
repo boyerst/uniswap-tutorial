@@ -182,6 +182,15 @@ const LIQUIDITY_POSITIONS = gql`
 `
 
 
+const UNISWAP_FACTORY = gql`
+  query uniswapFactories {
+    uniswapFactories {
+      pairCount
+    }
+  }
+`
+
+
 function App() {
 
   // EXECUTE THE QUERIES
@@ -204,7 +213,7 @@ function App() {
   const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
   const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
   const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
-
+  const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -226,6 +235,11 @@ function App() {
   console.log("dayDataError: ", dayDataError)
   console.log("dayDataData: ", dayDataData)
   console.log("liquidityPositionsData: ", liquidityPositionsData)
+  console.log("uniswapFactory: ", uniswapFactoryData)
+
+
+
+
 
 
   return (
