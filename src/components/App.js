@@ -34,21 +34,6 @@ const ALL_TOKENS_QUERY = gql`
   }
 `
 
-const PAIRS_QUERY = gql`
-  query pairs {
-    pairs (where :{token0: "0x0f7f961648ae6db43c75663ac7e5414eb79b5704", token1: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"}) {
-      id
-      createdAtTimestamp
-      volumeUSD
-      token0 {
-        symbol
-      }
-      token1 {
-        symbol
-      }
-    }
-  }
-`
 
 const UNISWAP_DAY_DATA = gql`
   query uniswapDayDatas {
@@ -200,6 +185,23 @@ const USDC_QUERY = gql`
 `
 
 
+const USDC_DAI_POOL_QUERY = gql`
+  query pairs {
+    pairs (where :{token0: "0x6b175474e89094c44da98b954eedeac495271d0f", token1: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"}) {
+      id
+      createdAtTimestamp
+      volumeUSD
+      token0 {
+        symbol
+      }
+      token1 {
+        symbol
+      }
+      token0Price
+      token1Price
+    }
+  }
+`
 
 
 
@@ -219,7 +221,6 @@ function App() {
     }
   })
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
-  const { loading: pairsLoading, error: pairsError, data: pairsData } = useQuery(PAIRS_QUERY)
   const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
   const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
   const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
@@ -227,6 +228,7 @@ function App() {
   const { loading: wbtcLoading, error: wbtcError, data: wbtcData } = useQuery(WBTC_QUERY)
   const { loading: usdtLoading, error: usdtError, data: usdtData } = useQuery(USDT_QUERY)
   const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
+  const { loading: usdcDaiPoolLoading, error: usdcDaiPoolError, data: usdcDaiPoolData } = useQuery(USDC_DAI_POOL_QUERY)
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -239,7 +241,6 @@ function App() {
 
 
   console.log("allTokensData: ", allTokensData)
-  console.log("pairsData: ", pairsData)
   console.log("dayDataData: ", dayDataData)
   console.log("liquidityPositionsData: ", liquidityPositionsData)
   console.log("uniswapFactory: ", uniswapFactoryData)
@@ -249,6 +250,7 @@ function App() {
   console.log("wbtcData: ", wbtcData)
   console.log("usdtData: ", usdtData)
   console.log("usdcData: ", usdcData)
+  console.log("usdcDaiPoolData: ", usdcDaiPoolData)
 
 
 
