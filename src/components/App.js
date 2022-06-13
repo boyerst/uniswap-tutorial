@@ -20,6 +20,77 @@ export const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
+
+
+
+
+const ALL_TOKENS_QUERY = gql`
+  query tokens {
+    tokens (first: 50, skip: 3000, orderBy: symbol, orderDirection: asc) {
+      id
+      symbol
+      name
+    }
+  }
+`
+
+const PAIRS_QUERY = gql`
+  query pairs {
+    pairs (where :{token0: "0x0f7f961648ae6db43c75663ac7e5414eb79b5704", token1: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"}) {
+      id
+      createdAtTimestamp
+      volumeUSD
+      token0 {
+        symbol
+      }
+      token1 {
+        symbol
+      }
+    }
+  }
+`
+
+const UNISWAP_DAY_DATA = gql`
+  query uniswapDayDatas {
+    uniswapDayDatas {
+      dailyVolumeUSD
+      totalVolumeUSD
+      totalLiquidityUSD
+    }
+  }
+`
+
+const LIQUIDITY_POSITIONS = gql`
+  query liquidityPositions {
+    liquidityPositions (where: { id: "0x00004ee988665cdda9a1080d5792cecd16dc1220-0x2e0647b90c3823a8c881de287ae2bd400489eea0" }) {
+      liquidityTokenBalance
+    }
+  }
+`
+
+const UNISWAP_FACTORY = gql`
+  query uniswapFactories {
+    uniswapFactories {
+      pairCount
+      totalVolumeUSD
+      totalVolumeETH
+      totalLiquidityUSD
+      totalLiquidityETH
+      txCount
+      mostLiquidTokens {
+        token
+      }
+    }
+  }
+`
+
+
+
+
+
+
+
+
 // DEFINE THE QUERIES
   // OPERATION TYPE AND NAME
     // 'query' = operation type?
@@ -55,15 +126,6 @@ const DAI_QUERY = gql`
 
 
 
-
-
-
-
-
-
-
-
-
 // OPERATION TYPE AND NAME
   // 'query' = type
   // 'bundles' = name
@@ -84,31 +146,6 @@ const ETH_PRICE_QUERY = gql`
 //                      ethPrice: "1800.115767561320051659391505499823"
 //                      __typename: "Bundle" 
 //                   }]
-
-
-
-
-const ALL_TOKENS_QUERY = gql`
-  query tokens {
-    tokens (first: 50, skip: 3000, orderBy: symbol, orderDirection: asc) {
-      id
-      symbol
-      name
-    }
-  }
-`
-// const ALL_TOKENS_QUERY = gql`
-//   query($first: Int, $orderBy: BigInt, $orderDirection: String) {
-//     tokens(
-//       first: $first, orderBy: $orderBy, orderDirection: $orderDirection
-//     ) {
-//       id
-//       symbol
-//       name
-      
-//     }
-//   }
-// `
 
 
 const BTC_QUERY = gql`
@@ -163,39 +200,6 @@ const USDC_QUERY = gql`
 `
 
 
-const UNISWAP_DAY_DATA = gql`
-  query uniswapDayDatas {
-    uniswapDayDatas {
-      dailyVolumeUSD
-      totalVolumeUSD
-      totalLiquidityUSD
-    }
-  }
-`
-
-const LIQUIDITY_POSITIONS = gql`
-  query liquidityPositions {
-    liquidityPositions (where: { id: "0x00004ee988665cdda9a1080d5792cecd16dc1220-0x2e0647b90c3823a8c881de287ae2bd400489eea0" }) {
-      liquidityTokenBalance
-    }
-  }
-`
-
-const UNISWAP_FACTORY = gql`
-  query uniswapFactories {
-    uniswapFactories {
-      pairCount
-      totalVolumeUSD
-      totalVolumeETH
-      totalLiquidityUSD
-      totalLiquidityETH
-      txCount
-      mostLiquidTokens {
-        token
-      }
-    }
-  }
-`
 
 
 
@@ -215,13 +219,14 @@ function App() {
     }
   })
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
+  const { loading: pairsLoading, error: pairsError, data: pairsData } = useQuery(PAIRS_QUERY)
+  const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
+  const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
+  const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
   const { loading: btcLoading, error: btcError, data: btcData } = useQuery(BTC_QUERY)
   const { loading: wbtcLoading, error: wbtcError, data: wbtcData } = useQuery(WBTC_QUERY)
   const { loading: usdtLoading, error: usdtError, data: usdtData } = useQuery(USDT_QUERY)
   const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
-  const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
-  const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
-  const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -233,17 +238,18 @@ function App() {
   const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
 
 
-  console.log("ethPriceData: ", ethPriceData)
-  console.log("daiData: ", daiData)
   console.log("allTokensData: ", allTokensData)
+  console.log("pairsData: ", pairsData)
+  console.log("dayDataData: ", dayDataData)
+  console.log("liquidityPositionsData: ", liquidityPositionsData)
+  console.log("uniswapFactory: ", uniswapFactoryData)
+  console.log("daiData: ", daiData)
+  console.log("ethPriceData: ", ethPriceData)
   console.log("btcData: ", btcData)
   console.log("wbtcData: ", wbtcData)
   console.log("usdtData: ", usdtData)
   console.log("usdcData: ", usdcData)
-  console.log("dayDataError: ", dayDataError)
-  console.log("dayDataData: ", dayDataData)
-  console.log("liquidityPositionsData: ", liquidityPositionsData)
-  console.log("uniswapFactory: ", uniswapFactoryData)
+
 
 
 
