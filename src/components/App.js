@@ -36,8 +36,17 @@ const ALL_TOKENS_QUERY = gql`
 
 const ALL_PAIRS_QUERY = gql`
   query pairs {
-    pairs (first: 1000) {
+    pairs (first: 1000, orderBy: reserveUSD, orderDirection: desc) {
       id
+      reserveUSD
+      token0 {
+        symbol
+        name
+      }
+      token1 {
+        symbol
+        name
+      }
     }
   } 
 `
@@ -84,22 +93,7 @@ const UNISWAP_FACTORY = gql`
 
 
 
-// DEFINE THE QUERIES
-  // OPERATION TYPE AND NAME
-    // 'query' = operation type?
-    // 'tokens' = operation name?
-  // VARIABLES & VARIABLE DEFINITION
-    // We pass a variable into this particular query...
-    // $tokenAddress: Bytes!
-    // ↑ Where $tokenAddress = the variable + Bytes! = variable type
-    // The !exclamation denotes that the variable type is required (the field requires a non-null argument)
-  // PARAMETERS
-    // We use the 'where' parameter to filter for properties
-      // Here we are querying for "tokens where they have an id of this address"
-  // FIELDS
-    // tokens
-    // derviedETH
-    // totalLiquidity
+
 const DAI_QUERY = gql`
   query tokens($tokenAddress: Bytes!) {
     tokens(where: { id: $tokenAddress }) {
@@ -109,26 +103,6 @@ const DAI_QUERY = gql`
   }
 `
 
-
-
-
-// data: for DAI_QUERY (variable renamed from data to daiData)
-  // This is the object returned from DAI_QUERY:
-
-//        tokens: [{ 
-//                  derivedETH: "0.000556614316469043115451462643202194"
-//                  totalLiquidity: "82268746.914670795110320116"
-//                  __typename: "Token" 
-//                 }]
-
-
-
-// OPERATION TYPE AND NAME
-  // 'query' = type
-  // 'bundles' = name
-    // ↑ We find these names in the subgraph of Uniswap
-    // Although it is listed as 'bundle' in Uniswap subgraph, we pluralize it because of the pagination model?
-      // From the docs "The simplest way to expose a connection between objects is with a field that returns a plural type" ❓❓❓❓
 const ETH_PRICE_QUERY = gql`
   query bundles {
     bundles(where: { id: "1" }) {
@@ -136,13 +110,6 @@ const ETH_PRICE_QUERY = gql`
     }
   }
 `
-// data: for ETH_PRICE_QUERY (variable renamed from data to ethPriceData)
-  // This is the object returned from ETH_PRICE_QUERY:
-
-//          bundles: [{ 
-//                      ethPrice: "1800.115767561320051659391505499823"
-//                      __typename: "Bundle" 
-//                   }]
 
 
 const BTC_QUERY = gql`
