@@ -189,7 +189,7 @@ const USDC_DAI_POOL_QUERY = gql`
   }
 `
 
-// Query a pair with pair id
+// Query a pair with pair address
 const DAI_WETH_QUERY = gql`
   query pair {
     pair (id: "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"){
@@ -217,6 +217,31 @@ const DAI_WETH_QUERY = gql`
   }
 `
 
+// Query last 100 swaps of LINK/USDC
+const LINK_USDC_QUERY = gql`
+  query swaps {
+    swaps(orderBy: timestamp, orderDirection: desc, where:
+     { pair: "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11" }
+    ) {
+         pair {
+           token0 {
+             symbol
+           }
+           token1 {
+             symbol
+           }
+         }
+         amount0In
+         amount0Out
+         amount1In
+         amount1Out
+         amountUSD
+         to
+     }
+  }
+`
+
+
 
 
 
@@ -243,18 +268,25 @@ function App() {
     }
   })
   
+  // General Queries
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
   const { loading: allPairsLoading, error: allPairsError, data: allPairsData } = useQuery(ALL_PAIRS_QUERY)
   const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
   const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
   const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
+
+  // Token Queries
   const { loading: btcLoading, error: btcError, data: btcData } = useQuery(BTC_QUERY)
   const { loading: wbtcLoading, error: wbtcError, data: wbtcData } = useQuery(WBTC_QUERY)
   const { loading: usdtLoading, error: usdtError, data: usdtData } = useQuery(USDT_QUERY)
   const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
+
+  // Pair Queries
   const { loading: usdcDaiPoolLoading, error: usdcDaiPoolError, data: usdcDaiPoolData } = useQuery(USDC_DAI_POOL_QUERY)
   const { loading: daiWethPoolLoading, error: daiWethPoolError, data: daiWethPoolData } = useQuery(DAI_WETH_QUERY)
 
+  // Swap Queries
+  const { loading: linkUsdcSwapLoading, error: linkUsdcSwapError, data: linkUsdcSwapData } = useQuery(LINK_USDC_QUERY)
 
 
 
@@ -286,6 +318,7 @@ function App() {
   console.log("usdcData: ", usdcData)
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
   console.log("daiWethPoolData: ", daiWethPoolData)
+  console.log("linkUsdcSwapData: ", linkUsdcSwapData)
 
 
 
