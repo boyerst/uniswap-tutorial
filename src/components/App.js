@@ -221,7 +221,7 @@ const DAI_WETH_QUERY = gql`
 const LINK_USDC_QUERY = gql`
   query swaps {
     swaps(orderBy: timestamp, orderDirection: desc, where:
-     { pair: "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11" }
+     { pair: "0xfad57d2039c21811c8f2b5d5b65308aa99d31559" }
     ) {
          pair {
            token0 {
