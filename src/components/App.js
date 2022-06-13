@@ -100,6 +100,10 @@ const DAI_QUERY = gql`
     }
   }
 `
+
+
+
+
 // data: for DAI_QUERY (variable renamed from data to daiData)
   // This is the object returned from DAI_QUERY:
 
@@ -184,7 +188,7 @@ const USDC_QUERY = gql`
   }
 `
 
-
+// Query a pair using addresses of BOTH tokens
 const USDC_DAI_POOL_QUERY = gql`
   query pairs {
     pairs (where :{token0: "0x6b175474e89094c44da98b954eedeac495271d0f", token1: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"}) {
@@ -193,15 +197,58 @@ const USDC_DAI_POOL_QUERY = gql`
       volumeUSD
       token0 {
         symbol
+        name
+        totalSupply
+        tradeVolumeUSD
+        totalLiquidity
       }
       token1 {
         symbol
       }
       token0Price
       token1Price
+      volumeToken0
+      volumeToken1
+      liquidityProviderCount
     }
   }
 `
+
+// Query a pair with pair id
+const DAI_WETH_QUERY = gql`
+  query pair {
+    pair (id: "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"){
+     token0 {
+       id
+       symbol
+       name
+       derivedETH
+     }
+     token1 {
+       id
+       symbol
+       name
+       derivedETH
+     }
+     reserve0
+     reserve1
+     reserveUSD
+     trackedReserveETH
+     token0Price
+     token1Price
+     volumeUSD
+     txCount
+    }
+  }
+`
+
+
+
+
+
+
+
+
 
 
 
@@ -229,6 +276,14 @@ function App() {
   const { loading: usdtLoading, error: usdtError, data: usdtData } = useQuery(USDT_QUERY)
   const { loading: usdcLoading, error: usdcError, data: usdcData } = useQuery(USDC_QUERY) 
   const { loading: usdcDaiPoolLoading, error: usdcDaiPoolError, data: usdcDaiPoolData } = useQuery(USDC_DAI_POOL_QUERY)
+  const { loading: daiWethPoolLoading, error: daiWethPoolError, data: daiWethPoolData } = useQuery(DAI_WETH_QUERY)
+
+
+
+
+
+
+
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
   // We use the Logical AND operator to render something or nothing
@@ -251,7 +306,7 @@ function App() {
   console.log("usdtData: ", usdtData)
   console.log("usdcData: ", usdcData)
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
-
+  console.log("daiWethPoolData: ", daiWethPoolData)
 
 
 
