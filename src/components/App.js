@@ -34,6 +34,14 @@ const ALL_TOKENS_QUERY = gql`
   }
 `
 
+const ALL_PAIRS_QUERY = gql`
+  query pairs {
+    pairs (first: 1000) {
+      id
+    }
+  } 
+`
+
 
 const UNISWAP_DAY_DATA = gql`
   query uniswapDayDatas {
@@ -267,7 +275,9 @@ function App() {
       tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f'
     }
   })
+  
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
+  const { loading: allPairsLoading, error: allPairsError, data: allPairsData } = useQuery(ALL_PAIRS_QUERY)
   const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
   const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
   const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
@@ -296,6 +306,8 @@ function App() {
 
 
   console.log("allTokensData: ", allTokensData)
+  console.log("allPairsData: ", allPairsData)
+  console.log("allPairsError: ", allPairsError)
   console.log("dayDataData: ", dayDataData)
   console.log("liquidityPositionsData: ", liquidityPositionsData)
   console.log("uniswapFactory: ", uniswapFactoryData)
