@@ -218,10 +218,11 @@ const DAI_WETH_QUERY = gql`
 `
 
 // Query last 100 swaps of LINK/USDC
-const LINK_USDC_QUERY = gql`
+  // Pair addresses from info.uniswap returned empty arrays - use pair addresses from ALL_PAIRS_QUERY
+const DAI_USDT_SWAP_QUERY = gql`
   query swaps {
     swaps(orderBy: timestamp, orderDirection: desc, where:
-     { pair: "0xfad57d2039c21811c8f2b5d5b65308aa99d31559" }
+     { pair: "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405" }
     ) {
          pair {
            token0 {
@@ -286,7 +287,7 @@ function App() {
   const { loading: daiWethPoolLoading, error: daiWethPoolError, data: daiWethPoolData } = useQuery(DAI_WETH_QUERY)
 
   // Swap Queries
-  const { loading: linkUsdcSwapLoading, error: linkUsdcSwapError, data: linkUsdcSwapData } = useQuery(LINK_USDC_QUERY)
+  const { loading: daiUsdtSwapLoading, error: daiUsdtSwapError, data: daiUsdtSwapData } = useQuery(DAI_USDT_SWAP_QUERY)
 
 
 
@@ -318,7 +319,7 @@ function App() {
   console.log("usdcData: ", usdcData)
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
   console.log("daiWethPoolData: ", daiWethPoolData)
-  console.log("linkUsdcSwapData: ", linkUsdcSwapData)
+  console.log("daiUsdtSwapData: ", daiUsdtSwapData)
 
 
 
