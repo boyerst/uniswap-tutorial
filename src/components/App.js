@@ -62,6 +62,26 @@ const UNISWAP_DAY_DATA = gql`
   }
 `
 
+const PAIR_DAY_DATA = gql`
+  query pairDayDatas {
+    pairDayDatas {
+      date
+      token0 {
+        symbol
+      }
+      token1 {
+        symbol
+      }
+      dailyVolumeToken0
+      dailyVolumeToken1
+      dailyVolumeUSD
+      reserveUSD
+    }
+  }
+`
+
+
+
 const LIQUIDITY_POSITIONS = gql`
   query liquidityPositions {
     liquidityPositions (where: { id: "0x00004ee988665cdda9a1080d5792cecd16dc1220-0x2e0647b90c3823a8c881de287ae2bd400489eea0" }) {
@@ -272,7 +292,8 @@ function App() {
   // General Queries
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
   const { loading: allPairsLoading, error: allPairsError, data: allPairsData } = useQuery(ALL_PAIRS_QUERY)
-  const { loading: dayDataLoading, error: dayDataError, data: dayDataData } = useQuery(UNISWAP_DAY_DATA) 
+  const { loading: uniswapDayDataLoading, error: uniswapDayDataError, data: uniswapDayDataData } = useQuery(UNISWAP_DAY_DATA) 
+  const { loading: pairDayDataLoading, error: pairDayDataError, data: pairDayDataData } = useQuery(PAIR_DAY_DATA) 
   const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
   const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
 
@@ -303,6 +324,7 @@ function App() {
   const daiPriceInEth = daiData && daiData.tokens[0].derivedETH
   const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity
   const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
+
   const daiUsdtSwapTime = daiUsdtSwapData && daiUsdtSwapData.swaps[0].timestamp
   const daiUsdtSwapConvertTime = new Date(daiUsdtSwapTime * 1000).toDateString()
 
@@ -311,7 +333,8 @@ function App() {
   console.log("allTokensData: ", allTokensData)
   console.log("allPairsData: ", allPairsData)
   console.log("allPairsError: ", allPairsError)
-  console.log("dayDataData: ", dayDataData)
+  console.log("uniswapDayDataData: ", uniswapDayDataData)
+  console.log("pairDayDataData: ", pairDayDataData)
   console.log("liquidityPositionsData: ", liquidityPositionsData)
   console.log("uniswapFactory: ", uniswapFactoryData)
   console.log("daiData: ", daiData)
