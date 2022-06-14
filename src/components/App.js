@@ -303,7 +303,8 @@ function App() {
   const daiPriceInEth = daiData && daiData.tokens[0].derivedETH
   const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity
   const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
-  const daiSwapTime = daiUsdtSwapData && daiUsdtSwapData.swaps[0].timestamp
+  const daiUsdtSwapTime = daiUsdtSwapData && daiUsdtSwapData.swaps[0].timestamp
+  const daiUsdtSwapConvertTime = new Date(daiUsdtSwapTime * 1000).toDateString()
 
 
 
@@ -322,7 +323,8 @@ function App() {
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
   console.log("daiWethPoolData: ", daiWethPoolData)
   console.log("daiUsdtSwapData: ", daiUsdtSwapData)
-  console.log("daiSwapTime: ", daiSwapTime)
+  console.log("daiUsdtSwapTime: ", daiUsdtSwapTime)
+  console.log("daiUsdtSwapConvertTime: ", daiUsdtSwapConvertTime)
 
 
 
