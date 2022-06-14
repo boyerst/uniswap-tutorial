@@ -62,23 +62,6 @@ const UNISWAP_DAY_DATA = gql`
   }
 `
 
-const PAIR_DAY_DATA = gql`
-  query pairDayDatas {
-    pairDayDatas {
-      date
-      token0 {
-        symbol
-      }
-      token1 {
-        symbol
-      }
-      dailyVolumeToken0
-      dailyVolumeToken1
-      dailyVolumeUSD
-      reserveUSD
-    }
-  }
-`
 
 
 
@@ -262,6 +245,24 @@ const DAI_USDT_SWAP_QUERY = gql`
   }
 `
 
+const PAIR_DAY_DATA = gql`
+  query pairDayDatas {
+    pairDayDatas (first: 100, where: {pairAddress: "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"}) {
+      date
+      token0 {
+        symbol
+      }
+      token1 {
+        symbol
+      }
+      reserveUSD
+      dailyVolumeToken0
+      dailyVolumeToken1
+      dailyVolumeUSD
+      reserveUSD
+    }
+  }
+`
 
 
 
@@ -293,7 +294,6 @@ function App() {
   const { loading: allTokensLoading, error: allTokensError, data: allTokensData } = useQuery(ALL_TOKENS_QUERY)
   const { loading: allPairsLoading, error: allPairsError, data: allPairsData } = useQuery(ALL_PAIRS_QUERY)
   const { loading: uniswapDayDataLoading, error: uniswapDayDataError, data: uniswapDayDataData } = useQuery(UNISWAP_DAY_DATA) 
-  const { loading: pairDayDataLoading, error: pairDayDataError, data: pairDayDataData } = useQuery(PAIR_DAY_DATA) 
   const { loading: liquidityPositionsLoading, error: liquidityPositionsError, data: liquidityPositionsData } = useQuery(LIQUIDITY_POSITIONS) 
   const { loading: uniswapFactoryLoading, error: uniswapFactoryError, data: uniswapFactoryData } = useQuery(UNISWAP_FACTORY) 
 
@@ -310,6 +310,8 @@ function App() {
   // Swap Queries
   const { loading: daiUsdtSwapLoading, error: daiUsdtSwapError, data: daiUsdtSwapData } = useQuery(DAI_USDT_SWAP_QUERY)
 
+  // PairDayData Queries
+  const { loading: pairDayDataLoading, error: pairDayDataError, data: pairDayDataData } = useQuery(PAIR_DAY_DATA) 
 
 
 
@@ -334,7 +336,6 @@ function App() {
   console.log("allPairsData: ", allPairsData)
   console.log("allPairsError: ", allPairsError)
   console.log("uniswapDayDataData: ", uniswapDayDataData)
-  console.log("pairDayDataData: ", pairDayDataData)
   console.log("liquidityPositionsData: ", liquidityPositionsData)
   console.log("uniswapFactory: ", uniswapFactoryData)
   console.log("daiData: ", daiData)
@@ -348,6 +349,7 @@ function App() {
   console.log("daiUsdtSwapData: ", daiUsdtSwapData)
   console.log("daiUsdtSwapTime: ", daiUsdtSwapTime)
   console.log("daiUsdtSwapConvertTime: ", daiUsdtSwapConvertTime)
+  console.log("pairDayDataData: ", pairDayDataData)
 
 
 
