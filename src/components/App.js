@@ -221,24 +221,24 @@ const DAI_WETH_QUERY = gql`
   // Pair addresses from info.uniswap returned empty arrays - use pair addresses from ALL_PAIRS_QUERY
 const DAI_USDT_SWAP_QUERY = gql`
   query swaps {
-    swaps(orderBy: timestamp, orderDirection: desc, where:
-     { pair: "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405" }
-    ) {
-         pair {
-           token0 {
-             symbol
-           }
-           token1 {
-             symbol
-           }
-         }
-         amount0In
-         amount0Out
-         amount1In
-         amount1Out
-         amountUSD
-         to
-     }
+    swaps(orderBy: timestamp, orderDirection: desc, where: { pair: "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405" }) {
+      timestamp
+      pair {
+        token0 {
+          symbol
+        }
+        token1 {
+          symbol
+        }
+      }
+      sender
+      amount0In
+      amount0Out
+      amount1In
+      amount1Out
+      amountUSD
+      to
+    }
   }
 `
 
@@ -303,6 +303,8 @@ function App() {
   const daiPriceInEth = daiData && daiData.tokens[0].derivedETH
   const daiTotalLiquidity = daiData && daiData.tokens[0].totalLiquidity
   const ethPriceInUSD = ethPriceData && ethPriceData.bundles[0].ethPrice
+  const daiSwapTime = daiUsdtSwapData && daiUsdtSwapData.swaps[0].timestamp
+
 
 
   console.log("allTokensData: ", allTokensData)
@@ -320,6 +322,7 @@ function App() {
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
   console.log("daiWethPoolData: ", daiWethPoolData)
   console.log("daiUsdtSwapData: ", daiUsdtSwapData)
+  console.log("daiSwapTime: ", daiSwapTime)
 
 
 
