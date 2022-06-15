@@ -405,7 +405,8 @@ function App() {
                     : daiUsdtSwapData.swaps.map(({timestamp, sender} : daiUsdtSwaps_swaps) => (
                       <div key={timestamp}>
                         <p>
-                          {timestamp}: {sender}
+                          {/*{timestamp}: {sender}*/}
+                          {new Date(timestamp * 1000).toDateString()}: {sender}
                         </p>
                       </div>
                     ))
