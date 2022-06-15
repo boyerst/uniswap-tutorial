@@ -402,11 +402,17 @@ function App() {
                 <div>
                   {daiUsdtSwapLoading
                     ? 'Loading swap data...'
-                    : daiUsdtSwapData.swaps.map(({timestamp, sender} : daiUsdtSwaps_swaps) => (
+                    : daiUsdtSwapData.swaps.map(({timestamp, pair, sender, amount0In} : daiUsdtSwaps_swaps) => (
                       <div key={timestamp}>
                         <p>
                           {/*{timestamp}: {sender}*/}
                           {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}: {sender}
+                        </p>
+                        <p>
+                          {pair.token0.symbol}/{pair.token1.symbol}
+                        </p>
+                        <p>
+                          {Number.parseFloat(amount0In).toFixed(2)} DAI
                         </p>
                       </div>
                     ))
