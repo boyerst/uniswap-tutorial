@@ -223,8 +223,8 @@ const DAI_WETH_QUERY = gql`
 // Query last 100 swaps of LINK/USDC
   // Pair addresses from info.uniswap returned empty arrays - use pair addresses from ALL_PAIRS_QUERY
 const DAI_USDT_SWAP_QUERY = gql`
-  query swaps {
-    swaps(orderBy: timestamp, orderDirection: desc, where: { pair: "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405" }) {
+  query daiUsdtSwaps {
+    swaps(first: 10, orderBy: timestamp, orderDirection: desc, where: { pair: "0xb20bd5d04be54f870d5c0d3ca85d82b34b836405" }) {
       timestamp
       pair {
         token0 {
@@ -346,7 +346,7 @@ function App() {
   console.log("usdcData: ", usdcData)
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
   console.log("daiWethPoolData: ", daiWethPoolData)
-  console.log("daiUsdtSwapData: ", daiUsdtSwapData)
+  console.log("🔥daiUsdtSwapData: ", daiUsdtSwapData)
   console.log("daiUsdtSwapTime: ", daiUsdtSwapTime)
   console.log("daiUsdtSwapConvertTime: ", daiUsdtSwapConvertTime)
   console.log("pairDayDataData: ", pairDayDataData)
@@ -399,7 +399,18 @@ function App() {
                     : '$' + // display the total amount of DAI spread across all pools
                       parseFloat(ethPriceInUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                 </h2>
-
+                <div>
+                  {daiUsdtSwapLoading
+                    ? 'Loading swap data...'
+                    : daiUsdtSwapData.swaps.map(({timestamp, sender} : daiUsdtSwaps_swaps) => (
+                      <div key={timestamp}>
+                        <p>
+                          {timestamp}: {sender}
+                        </p>
+                      </div>
+                    ))
+                  }
+                </div>
               </div>
             </div>
           </main>
