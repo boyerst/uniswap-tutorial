@@ -406,7 +406,7 @@ function App() {
                       <div key={timestamp}>
                         <p>
                           {/*{timestamp}: {sender}*/}
-                          {new Date(timestamp * 1000).toDateString()}: {sender}
+                          {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}: {sender}
                         </p>
                       </div>
                     ))
