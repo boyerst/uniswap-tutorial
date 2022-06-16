@@ -330,6 +330,8 @@ function App() {
   const daiUsdtSwapTime = daiUsdtSwapData && daiUsdtSwapData.swaps[0].timestamp
   const daiUsdtSwapConvertTime = new Date(daiUsdtSwapTime * 1000).toDateString()
 
+  const daiWethTVL = daiWethPoolData && daiWethPoolData.pair.reserveUSD
+
 
 
   console.log("allTokensData: ", allTokensData)
@@ -345,7 +347,8 @@ function App() {
   console.log("usdtData: ", usdtData)
   console.log("usdcData: ", usdcData)
   console.log("usdcDaiPoolData: ", usdcDaiPoolData)
-  console.log("daiWethPoolData: ", daiWethPoolData)
+  console.log("daiWethTVL: ", daiWethTVL)
+  console.log("💥daiWethPoolData: ", daiWethPoolData)
   console.log("🔥daiUsdtSwapData: ", daiUsdtSwapData)
   console.log("daiUsdtSwapTime: ", daiUsdtSwapTime)
   console.log("daiUsdtSwapConvertTime: ", daiUsdtSwapConvertTime)
@@ -377,13 +380,16 @@ function App() {
                 <img src={daiLogo} width="150" height="150" className="mb-4" alt="" />
                 <h2>
                   {/*We render based on the conditions of the query*/}
-                  DAI price:{' '}
+                  DAI Price:{' '}
                   {ethLoading || daiLoading
                     ? 'Loading token data...'
                     : '$' +
                       // parse responses as floats and fix to 2 decimals
                       // parseFloat excepts a string and parses it to a floating point number
                       (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
+                </h2>
+                <h2>
+                  DAI/WETH Pool TVL: ${Number.parseFloat(daiWethTVL).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                 </h2>
                 <h2>
                   DAI Total Liquidity:{' '}
@@ -405,10 +411,10 @@ function App() {
                     : daiUsdtSwapData.swaps.map(({timestamp, pair, sender, amount0In, amount0Out, amount1In, amount1Out, to} : daiUsdtSwaps_swaps) => (
                       <div key={timestamp} style={{marginBottom: "25px"}}>
                         <p>
-                          <b>Time: {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}</b>
+                         Time: {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}
                         </p>
                         <p>
-                          Pair: {pair.token0.symbol}/{pair.token1.symbol}
+                          Swap Pair: {pair.token0.symbol}/{pair.token1.symbol}
                         </p>
 
                         {
@@ -423,7 +429,7 @@ function App() {
                           </span>
                         }
                         <h6 >From: {sender.substring(0,6)}..{sender.substring(38,42)}</h6>
-
+                        
                         {
                           amount0Out > 0
                           ?
