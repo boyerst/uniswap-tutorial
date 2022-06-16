@@ -403,7 +403,7 @@ function App() {
                   {daiUsdtSwapLoading
                     ? 'Loading swap data...'
                     : daiUsdtSwapData.swaps.map(({timestamp, pair, sender, amount0In, amount0Out, amount1In, amount1Out, to} : daiUsdtSwaps_swaps) => (
-                      <div key={timestamp}>
+                      <div key={timestamp} style={{marginBottom: "25px"}}>
                         <p>
                           <b>Time: {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}</b>
                         </p>
@@ -411,7 +411,6 @@ function App() {
                           Pair: {pair.token0.symbol}/{pair.token1.symbol}
                         </p>
 
-                        <h6 >From: {sender}</h6>
                         {
                           amount0In > 0
                           ?
@@ -423,8 +422,8 @@ function App() {
                             {Number.parseFloat(amount1In).toFixed(2)} USDT                        
                           </span>
                         }
-                        
-                        <h6>To: {to}</h6>
+                        <h6 >From: {sender.substring(0,6)}..{sender.substring(38,42)}</h6>
+
                         {
                           amount0Out > 0
                           ?
@@ -436,8 +435,10 @@ function App() {
                             {Number.parseFloat(amount1Out).toFixed(2)} USDT                       
                           </span>
                         }
+                        <h6>To: {to.substring(0,6)}..{to.substring(38,42)}</h6>
 
                       </div>
+
                     ))
                   }
                 </div>
