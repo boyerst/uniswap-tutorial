@@ -402,18 +402,41 @@ function App() {
                 <div>
                   {daiUsdtSwapLoading
                     ? 'Loading swap data...'
-                    : daiUsdtSwapData.swaps.map(({timestamp, pair, sender, amount0In} : daiUsdtSwaps_swaps) => (
+                    : daiUsdtSwapData.swaps.map(({timestamp, pair, sender, amount0In, amount0Out, amount1In, amount1Out, to} : daiUsdtSwaps_swaps) => (
                       <div key={timestamp}>
                         <p>
-                          {/*{timestamp}: {sender}*/}
-                          {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}: {sender}
+                          <b>Time: {new Date(timestamp * 1000).toLocaleString('en-US', {timeZone: 'EST'})}</b>
                         </p>
                         <p>
-                          {pair.token0.symbol}/{pair.token1.symbol}
+                          Pair: {pair.token0.symbol}/{pair.token1.symbol}
                         </p>
-                        <p>
-                          {Number.parseFloat(amount0In).toFixed(2)} DAI
-                        </p>
+
+                        <h6 >From: {sender}</h6>
+                        {
+                          amount0In > 0
+                          ?
+                          <span>              
+                            {Number.parseFloat(amount0In).toFixed(2)} DAI                        
+                          </span>
+                          :
+                          <span>                       
+                            {Number.parseFloat(amount1In).toFixed(2)} USDT                        
+                          </span>
+                        }
+                        
+                        <h6>To: {to}</h6>
+                        {
+                          amount0Out > 0
+                          ?
+                          <span>                       
+                            {Number.parseFloat(amount0Out).toFixed(2)} DAI                       
+                          </span>
+                          :
+                          <span>                       
+                            {Number.parseFloat(amount1Out).toFixed(2)} USDT                       
+                          </span>
+                        }
+
                       </div>
                     ))
                   }
