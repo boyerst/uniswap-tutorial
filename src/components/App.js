@@ -194,7 +194,7 @@ const USDC_DAI_POOL_QUERY = gql`
 `
 
 // Query a pair with pair address
-const DAI_WETH_QUERY = gql`
+const DAI_WETH_POOL_QUERY = gql`
   query pair {
     pair (id: "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"){
      token0 {
@@ -306,7 +306,7 @@ function App() {
 
   // Pair Queries
   const { loading: usdcDaiPoolLoading, error: usdcDaiPoolError, data: usdcDaiPoolData } = useQuery(USDC_DAI_POOL_QUERY)
-  const { loading: daiWethPoolLoading, error: daiWethPoolError, data: daiWethPoolData } = useQuery(DAI_WETH_QUERY)
+  const { loading: daiWethPoolLoading, error: daiWethPoolError, data: daiWethPoolData } = useQuery(DAI_WETH_POOL_QUERY)
 
   // Swap Queries
   const { loading: daiUsdtSwapLoading, error: daiUsdtSwapError, data: daiUsdtSwapData } = useQuery(DAI_USDT_SWAP_QUERY)
@@ -331,7 +331,8 @@ function App() {
   const daiUsdtSwapTime = daiUsdtSwapData && daiUsdtSwapData.swaps[0].timestamp
   const daiUsdtSwapConvertTime = new Date(daiUsdtSwapTime * 1000).toDateString()
 
-  const daiWethTVL = daiWethPoolData && daiWethPoolData.pair.reserveUSD
+  const daiWethTVL = daiWethPoolData && daiWethPoolData.pair.reserveUSD 
+  const usdcDaiTVL = usdcDaiPoolData && usdcDaiPoolData.pairs[0].reserveUSD
 
 
 
@@ -347,13 +348,14 @@ function App() {
   console.log("wbtcData: ", wbtcData)
   console.log("usdtData: ", usdtData)
   console.log("usdcData: ", usdcData)
-  console.log("usdcDaiPoolData: ", usdcDaiPoolData)
+  console.log("🫣usdcDaiPoolData: ", usdcDaiPoolData)
   console.log("daiWethTVL: ", daiWethTVL)
   console.log("💥daiWethPoolData: ", daiWethPoolData)
   console.log("🔥daiUsdtSwapData: ", daiUsdtSwapData)
   console.log("daiUsdtSwapTime: ", daiUsdtSwapTime)
   console.log("daiUsdtSwapConvertTime: ", daiUsdtSwapConvertTime)
   console.log("pairDayDataData: ", pairDayDataData)
+  console.log("usdcDaiTVL: ", usdcDaiTVL)
 
 
 
@@ -393,6 +395,9 @@ function App() {
                 </h2>
                 <h2>
                   DAI/WETH Pool TVL: ${Number.parseFloat(daiWethTVL).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                </h2>
+                <h2>
+                  USDC/DAI Pool TVL: ${Number.parseFloat(usdcDaiTVL).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
                 </h2>
                 <h2>
                   DAI Total Liquidity:{' '}
