@@ -183,6 +183,7 @@ const USDC_DAI_POOL_QUERY = gql`
       token1 {
         symbol
       }
+      reserveUSD
       token0Price
       token1Price
       volumeToken0
@@ -386,6 +387,8 @@ function App() {
                     : '$' +
                       // parse responses as floats and fix to 2 decimals
                       // parseFloat excepts a string and parses it to a floating point number
+                      // DAI ETH Value * ETH USD Value
+                        // .00002 * $2000
                       (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
                 </h2>
                 <h2>
