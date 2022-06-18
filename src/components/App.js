@@ -266,7 +266,13 @@ const PAIR_DAY_DATA = gql`
 `
 
 
-
+const PAIR_RESERVE_USD_DATA = gql`
+  query pairReserveUSDData {
+    pairs (first: 15) {
+      reserveUSD
+    }
+  }
+`
 
 
 
@@ -316,7 +322,7 @@ function App() {
 
 
 
-
+  const { loading: pairReserveUSDLoading, error: pairReserveUSDError, data: pairReserveUSDData } = useQuery(PAIR_RESERVE_USD_DATA)
 
 
   // We format the data we get back from the queries by drilling down into the values we specified in our queries
@@ -349,13 +355,14 @@ function App() {
   console.log("usdtData: ", usdtData)
   console.log("usdcData: ", usdcData)
   console.log("🫣usdcDaiPoolData: ", usdcDaiPoolData)
-  console.log("daiWethTVL: ", daiWethTVL)
+  console.log("usdcDaiTVL: ", usdcDaiTVL)
   console.log("💥daiWethPoolData: ", daiWethPoolData)
+  console.log("daiWethTVL: ", daiWethTVL)
   console.log("🔥daiUsdtSwapData: ", daiUsdtSwapData)
   console.log("daiUsdtSwapTime: ", daiUsdtSwapTime)
   console.log("daiUsdtSwapConvertTime: ", daiUsdtSwapConvertTime)
   console.log("pairDayDataData: ", pairDayDataData)
-  console.log("usdcDaiTVL: ", usdcDaiTVL)
+  console.log("🟢pairReserveUSDData: ", pairReserveUSDData)
 
 
 
