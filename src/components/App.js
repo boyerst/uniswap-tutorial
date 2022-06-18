@@ -268,7 +268,7 @@ const PAIR_DAY_DATA = gql`
 
 const PAIR_RESERVE_USD_DATA = gql`
   query pairReserveUSDData {
-    pairs (first: 15) {
+    pairs (first: 15, where: { reserveUSD_gte: 1}) {
       reserveUSD
     }
   }
